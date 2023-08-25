@@ -1,4 +1,4 @@
-package createclient
+package create_client
 
 import (
 	"time"
@@ -30,7 +30,7 @@ func NewCreateClientUseCase(clientGateway gateway.ClientGateway) *CreateClientUs
 	}
 }
 
-func (uc *CreateClientUseCase) Execute(input *CreateClientInputDTO) (*CreateClientOutputDTO, error) {
+func (uc *CreateClientUseCase) Execute(input CreateClientInputDTO) (*CreateClientOutputDTO, error) {
 
 	client, err := entity.NewClient(input.Name, input.Email)
 	if err != nil {

@@ -1,4 +1,4 @@
-package createaccount
+package create_account
 
 import (
 	"github.com.br/MarcoAntonioGomes/fc-ms-wallet/internal/entity"
@@ -6,7 +6,7 @@ import (
 )
 
 type CreateAccountInputDTO struct {
-	ClientID string
+	ClientID string `json:"client_id"`
 }
 
 type CreateAccountOutputDTO struct {
@@ -25,7 +25,7 @@ func NewCreateAccountUseCase(accountGateway gateway.AccountGateway, clientGatewa
 	}
 }
 
-func (uc *CreateAccountUseCase) Execute(input *CreateAccountInputDTO) (*CreateAccountOutputDTO, error) {
+func (uc *CreateAccountUseCase) Execute(input CreateAccountInputDTO) (*CreateAccountOutputDTO, error) {
 
 	client, err := uc.ClientGateway.Get(input.ClientID)
 	if err != nil {
