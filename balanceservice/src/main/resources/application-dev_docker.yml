@@ -1,0 +1,41 @@
+server:
+  port: 3003
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/balances
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    hikari:
+      minimum-idle: 1
+      maximum-pool-size: 50
+      max-lifetime: 600000
+      connection-timeout: 30000
+      leak-detection-threshold: 600000
+      idle-timeout: 60000
+      connection-init-sql: select 1
+
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
+
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    kafka:
+      consumer:
+        client-id: configure-me_client-id
+        group-id: wallet
+        auto-offset-reset: earliest
+        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        enable-auto-commit: false
+
