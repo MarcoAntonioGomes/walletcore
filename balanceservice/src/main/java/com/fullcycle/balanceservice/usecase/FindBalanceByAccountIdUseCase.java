@@ -2,24 +2,23 @@ package com.fullcycle.balanceservice.usecase;
 
 
 import com.fullcycle.balanceservice.database.BalanceDB;
-import com.fullcycle.balanceservice.database.BalanceDBImpl;
-import com.fullcycle.balanceservice.dto.BalanceInputDTO;
 import com.fullcycle.balanceservice.dto.BalanceOutputDTO;
 import com.fullcycle.balanceservice.entity.Balance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public class SaveBalanceUseCase {
+@Service
+public class FindBalanceByAccountIdUseCase {
 
-    private BalanceDB balanceDB = new BalanceDBImpl();
+    @Autowired
+    private BalanceDB balanceDB;
 
-    public BalanceOutputDTO Execute(BalanceInputDTO balanceInputDTO) {
-
-        Balance balance = new Balance(UUID.randomUUID().toString(), balanceInputDTO.getAccountId(), balanceInputDTO.getBalance());
-        Balance balanceSaved = balanceDB.save(balance);
-        BalanceOutputDTO balanceOutputDTO = new BalanceOutputDTO(balanceSaved.getAccountId(), balanceSaved.getBalance(), balanceSaved.getCreatedAt());
-
-        return balanceOutputDTO;
+    public List<BalanceOutputDTO> execute(String accountId) {
+        List<Balance> balanceList = balanceDB.findByAccountId(accountId);
+        return balanceList.stream().map(balance -> new BalanceOutputDTO(balance.getAccountId(), balance.getBalance(), balance.getCreatedAt())).collect(Collectors.toList());
     }
 
 
